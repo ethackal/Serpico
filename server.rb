@@ -6,7 +6,7 @@ require './helpers/image.rb'
 require 'zip'
 require 'net/ldap'
 
-class Server < Sinatra::Application
+class Server < Sinatra::Base
     # import config options
     config_options = JSON.parse(File.read('./config.json'))
 
@@ -66,7 +66,7 @@ class Server < Sinatra::Application
     set :mod_confidentiality, ["Not Defined","None","Low","High"]
     set :mod_integrity, ["Not Defined","None","Low","High"]
     set :mod_availability, ["Not Defined","None","Low","High"]
-    
+
     #Risk Matrix
     set :severity, ["Low","Medium","High"]
     set :likelihood, ["Low","Medium","High"]
@@ -84,10 +84,10 @@ class Server < Sinatra::Application
     set :session_secret, rand(36**12).to_s(36)
 
     # load the default stuff
- 	Dir[File.join(File.dirname(__FILE__), "routes", "*.rb")].each { |lib| require lib }
- 	Dir[File.join(File.dirname(__FILE__), "helpers", "*.rb")].each { |lib| require lib }
- 	Dir[File.join(File.dirname(__FILE__), "lib", "*.rb")].each { |lib| require lib }
-
+ 	#Dir[File.join(File.dirname(__FILE__), "routes", "*.rb")].each { |lib| require lib }
+ 	#Dir[File.join(File.dirname(__FILE__), "helpers", "*.rb")].each { |lib| require lib }
+ 	#Dir[File.join(File.dirname(__FILE__), "lib", "*.rb")].each { |lib| require lib }
+=begin
     # load plugins last, enables monkey patching
     Dir[File.join(File.dirname(__FILE__), "plugins/**/", "*.json")].each { |lib|
         pl = JSON.parse(File.open(lib).read)
@@ -99,6 +99,7 @@ class Server < Sinatra::Application
             }
         end
     }
+=end 
 end
 
 # Helper Functions
@@ -231,9 +232,9 @@ def image_insert(docx, rand_file, image, end_xml)
     p_id = "d#{rand(36**7).to_s(36)}"
     name = image.description
 
-    image_file = File.open(image.filename_location,'rb') 
-    img_data = image_file.read()              
-    
+    image_file = File.open(image.filename_location,'rb')
+    img_data = image_file.read()
+
     #resize picture to fit into word if it's too big
     if jpeg?(img_data)
       jpeg_dimension = JPEG.new(image.filename_location)
@@ -295,7 +296,7 @@ end
 
 def get_plugin_list
     menu = []
-    
+
     Dir[File.join(File.dirname(__FILE__), "plugins/**/", "*.json")].each { |lib|
         pl = JSON.parse(File.open(lib).read)
         a = {}

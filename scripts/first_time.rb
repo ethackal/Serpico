@@ -242,4 +242,3 @@ puts "Copying configuration settings over."
 File.open("./config.json", "w") do |f|
 	f.write File.open("./config.json.defaults", "rb").read
 end
-

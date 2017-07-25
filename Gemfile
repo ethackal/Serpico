@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-ruby "2.1.5"
+ruby "2.4.1"
 
+gem 'bigdecimal'
 gem 'sinatra'
 gem 'haml'
 gem 'rubyzip'
@@ -11,7 +12,4 @@ gem 'nokogiri'
 gem 'do_sqlite3', '0.10.17'
 gem 'data_mapper', '1.2.0'
 gem 'dm-sqlite-adapter', '1.2.0'
-gem 'msfrpc-client', '1.0.3'
-
-
-
+gem 'msfrpc-client', '~>1.1.0'
