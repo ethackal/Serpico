@@ -6,7 +6,7 @@ require './helpers/image.rb'
 require 'zip'
 require 'net/ldap'
 
-class Server < Sinatra::Base
+class Server < Sinatra::Application
     # import config options
     config_options = JSON.parse(File.read('./config.json'))
 
@@ -84,10 +84,10 @@ class Server < Sinatra::Base
     set :session_secret, rand(36**12).to_s(36)
 
     # load the default stuff
- 	#Dir[File.join(File.dirname(__FILE__), "routes", "*.rb")].each { |lib| require lib }
- 	#Dir[File.join(File.dirname(__FILE__), "helpers", "*.rb")].each { |lib| require lib }
- 	#Dir[File.join(File.dirname(__FILE__), "lib", "*.rb")].each { |lib| require lib }
-=begin
+ 	Dir[File.join(File.dirname(__FILE__), "routes", "*.rb")].each { |lib| require lib }
+ 	Dir[File.join(File.dirname(__FILE__), "helpers", "*.rb")].each { |lib| require lib }
+ 	Dir[File.join(File.dirname(__FILE__), "lib", "*.rb")].each { |lib| require lib }
+
     # load plugins last, enables monkey patching
     Dir[File.join(File.dirname(__FILE__), "plugins/**/", "*.json")].each { |lib|
         pl = JSON.parse(File.open(lib).read)
@@ -99,7 +99,6 @@ class Server < Sinatra::Base
             }
         end
     }
-=end 
 end
 
 # Helper Functions
